@@ -1,1 +1,5 @@
+import networkx as nx
+import matplotlib.pyplot as plt
 
+n = 70     # кол-во вершин
+p = 0.45   # вероятность появления ребра
