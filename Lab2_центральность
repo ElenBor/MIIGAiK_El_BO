@@ -1,8 +1,18 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-import numpy as np
 
 # Создаем граф с 30 узлами
 G = nx.Graph()
+# Добавляем 30 узлов
 nodes = 30
 G.add_nodes_from(range(nodes))
+
+# Соединяем узлы в цепочку (каждый узел со следующим)
+for i in range(num_nodes - 1):
+    G.add_edge(i, i + 1)
+
+center = num_nodes // 2  # Индекс центрального узла
+for i in [-2, -1, 0, 1, 2]:
+    neighbor = center + i
+    if 0 <= neighbor < num_nodes and i != 0:
+        G.add_edge(center, neighbor)
