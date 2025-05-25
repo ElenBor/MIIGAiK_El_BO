@@ -1,13 +1,11 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# Создаем граф с 30 узлами
 G = nx.Graph()
-# Добавляем 30 узлов
-nodes = 30
-G.add_nodes_from(range(nodes))
 
-# Соединяем узлы в цепочку (каждый узел со следующим)
+num_nodes = 30
+G.add_nodes_from(range(num_nodes))
+
 for i in range(num_nodes - 1):
     G.add_edge(i, i + 1)
 
@@ -16,3 +14,28 @@ for i in [-2, -1, 0, 1, 2]:
     neighbor = center + i
     if 0 <= neighbor < num_nodes and i != 0:
         G.add_edge(center, neighbor)
+
+centrality = nx.eigenvector_centrality(G)
+
+centrality_values = [centrality[i] for i in range(num_nodes)]
+
+print("Центральность по собственным векторам:")
+for node, value in centrality.items():
+    print(f"Узел {node}: {value:.5f}")
+
+# Рисуем граф
+plt.figure(figsize=(14, 4))
+pos = {i: (i, 0) for i in range(num_nodes)}  # Располагаем все узлы на прямой линии
+nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=400, font_size=10)
+plt.title("Граф из 30 узлов")
+plt.show()
+
+# Рисуем график значений центральности
+plt.figure(figsize=(10, 4))
+plt.plot(range(num_nodes), centrality_values, marker='o', linestyle='-', color='b')
+plt.title("Центральность по собственным векторам")
+plt.xlabel("Номер узла")
+plt.ylabel("Значение центральности")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
