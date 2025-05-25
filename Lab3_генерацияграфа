@@ -1,5 +1,20 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-n = 70     # кол-во вершин
-p = 0.45   # вероятность появления ребра
+n = 70
+p = 0.45
+
+G = nx.erdos_renyi_graph(n, p)
+
+average_degree_exp = sum(dict(G.degree()).values()) / n
+
+average_degree_theory = (n - 1) * p
+
+print(f"Теоретическая средняя степень вершины: {average_degree_theory:.4f}")
+print(f"Экспериментальная средняя степень вершины: {average_degree_exp:.4f}")
+print(f"Разница (эксперимент - теория): {average_degree_exp - average_degree_theory:.4f}")
+
+plt.figure(figsize=(10, 8))
+nx.draw(G, node_size=30, with_labels=False, alpha=0.7, edge_color='gray')
+plt.title(f"Граф Эрдёша-Реньи $ G({n}, {p}) $")
+plt.show()
